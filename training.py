@@ -51,18 +51,14 @@ class Training:
         )
         self.q_table[state, action] = val
 
-    def get_training_info(
-        self,
-        num_episode,
-        ep_rewards,
-        number_of_iterations,
-        trajectory,
-        starting_position,
-        info
-    ):
+    def get_training_info(self,num_episode,ep_rewards,number_of_iterations,
+                          trajectory,starting_position,info):
         if num_episode % 5000 == 0:
             print(
-                f"Training info of {self.algorithm}: episode {num_episode}, episode reward:{ep_rewards}, number of steps: {number_of_iterations}, epsilon: {self.epsilon}, gamma: {self.gamma}, alpha: {self.alpha} starting position: {starting_position}, trajectory: {trajectory}, {info}"
+                f"Training info of {self.algorithm}: episode {num_episode}," +
+                f"episode reward:{ep_rewards}, number of steps: {number_of_iterations}," +
+                f"epsilon: {self.epsilon}, gamma: {self.gamma}, alpha: {self.alpha}" +
+                f"starting position: {starting_position}, trajectory: {trajectory}, {info}"
             )
 
     def get_training_results(self,ep_num,ep_results,episode_rewards,num_of_iterations):
@@ -92,26 +88,15 @@ class Training:
         plt.legend(loc=4)
         plt.xlabel("Number of Episodes")
         plt.title("Training results of " + agent)
-        # plots = plt.gcf()
         plt.show()
-        # path = 'plots/'
-        # if agent == "Q-learning":
-        #     plots.savefig(path + 'Training_Results_Q_learning.png', dpi=100)
-        # else:
-        #     plots.savefig(path + 'Training_Results_Sarsa.png', dpi=100)
 
     def train_agent(self, num_games,q_table,max_steps):
         num_games = int(num_games)
         env = self.environment
         maximum_steps_per_game = max_steps
         episode_rewards = []
-        ep_results = {
-            "ep": [],
-            "avg": [],
-            "min": [],
-            "max": [],
-            "number of steps": [],
-        }
+        ep_results = {"ep": [],"avg": [],"min": [],
+                      "max": [],"number of steps": []}
         num_of_iterations = []
 
         for ep_num in range(num_games):
@@ -142,17 +127,12 @@ class Training:
                 ep_rewards += reward
 
             num_of_iterations.append(number_of_iterations)
-            self.get_training_info(
-                ep_num,
-                ep_rewards,
-                number_of_iterations,
-                trajectory,
-                starting_position,
-                info
-            )
+            self.get_training_info(ep_num,ep_rewards,number_of_iterations,
+                                   trajectory,starting_position,info)
             self.decay_epsilon(num_games)
             episode_rewards.append(ep_rewards)
-            ep_results = self.get_training_results(ep_num,ep_results,episode_rewards,num_of_iterations)
+            ep_results = self.get_training_results(ep_num,ep_results,
+                                                episode_rewards,num_of_iterations)
 
         self.plot_training_results(ep_results,self.algorithm)
 

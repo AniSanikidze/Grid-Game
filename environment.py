@@ -6,16 +6,14 @@ class Grid:
     EMPTY = 0
     AGENT = 1
     BOMB = 2
-    GOLD = 3
+    FOOD = 3
 
-    def __init__(
-        self, env_size
-    ):
+    def __init__(self, env_size):
         self.env_size = env_size
         self.grid = np.zeros((env_size, env_size))
-        self.bomb_state = self.add_bomb()
-        self.gold_state = self.add_gold()
-        self.terminal_states = [self.gold_state] + [self.bomb_state]
+        self.bomb = self.add_bomb()
+        self.food = self.add_food()
+        self.terminal_states = [self.food] + [self.bomb]
         self.full_state_space = self.init_state_space()
         self.action_space = [-1, 1, 1, -1]
         self.add_agent_randomly()
@@ -70,22 +68,19 @@ class Grid:
 
     def add_agent_randomly(self):
         starting_position_x, starting_position_y = random.choice(
-            self.get_empty_states()
-        )
+            self.get_empty_states())
         self.grid[starting_position_x][starting_position_y] = Grid.AGENT
         return starting_position_x, starting_position_y
 
-    def add_gold(self):
+    def add_food(self):
         starting_position_x, starting_position_y = random.choice(
-            self.get_empty_states()
-        )
-        self.grid[starting_position_x][starting_position_y] = Grid.GOLD
+            self.get_empty_states())
+        self.grid[starting_position_x][starting_position_y] = Grid.FOOD
         return starting_position_x, starting_position_y
 
     def add_bomb(self):
         starting_position_x, starting_position_y = random.choice(
-            self.get_empty_states()
-        )
+            self.get_empty_states())
         self.grid[starting_position_x][starting_position_y] = Grid.BOMB
         return starting_position_x, starting_position_y
 
@@ -95,8 +90,8 @@ class Grid:
     def is_terminal_state(self, state):
         return state in self.terminal_states
 
-    def is_gold(self, state):
-        return self.grid[state[0]][state[1]] == Grid.GOLD
+    def is_food(self, state):
+        return self.grid[state[0]][state[1]] == Grid.FOOD
 
     def is_bomb(self, state):
         return self.grid[state[0]][state[1]] == Grid.BOMB
@@ -142,7 +137,7 @@ class Grid:
             return self.get_state(), -10, self.is_terminal_state(resulting_state), info
 
         else:
-            if self.is_gold(resulting_state):
+            if self.is_food(resulting_state):
                 info = "The agent won the game!"
                 self.set_state(resulting_state)
                 return self.get_state(), 100, self.is_terminal_state(resulting_state), info
@@ -157,27 +152,9 @@ class Grid:
                 return self.get_state(), -1, self.is_terminal_state(resulting_state), info
 
     def reset(self):
-
         self.grid = np.zeros((self.env_size, self.env_size))
-        self.bomb_state = self.add_bomb()
-        self.gold_state = self.add_gold()
-        self.terminal_states = [self.gold_state] + [self.bomb_state]
+        self.bomb = self.add_bomb()
+        self.food = self.add_food()
+        self.terminal_states = [self.food] + [self.bomb]
         self.add_agent_randomly()
         return self.get_state()
-
-    def render(self):
-        print("-------------------------------")
-        for row in self.grid:
-            for col in row:
-                if col == Grid.AGENT:
-                    print("A", end="\t")
-                elif col == Grid.BLOCKED_STATE:
-                    print("X", end="\t")
-                elif col == Grid.BOMB:
-                    print("B", end="\t")
-                elif col == Grid.GOLD:
-                    print("G", end="\t")
-                else:
-                    print("-", end="\t")
-            print("\n")
-        print("-------------------------------")

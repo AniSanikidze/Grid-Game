@@ -1,5 +1,4 @@
-from tkinter.tix import Tree
-from UI import display_ui
+from visualization import display_gui
 import pickle
 
 def load(q_table):
@@ -35,7 +34,7 @@ def play(env,trained_agent, q_table_to_load, num_games, maximum_steps_per_game):
 
             new_state,rewards, done, info = env.step(action)
             state = new_state
-            display_ui(done, env)
+            display_gui(done, env)
 
             if done:
                 print(info)
