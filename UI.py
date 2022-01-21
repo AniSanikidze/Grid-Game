@@ -21,6 +21,6 @@ def display_ui(done, environment):
     img = img.resize((300, 300), resample=Image.BOX)
     cv2.imshow("Grid Game", np.array(img))
     if done:
-        cv2.waitKey(300)
+        cv2.waitKey(320)
     else:
-        cv2.waitKey(250)
+        cv2.waitKey(300)
