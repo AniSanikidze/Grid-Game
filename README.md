@@ -1,4 +1,5 @@
 # Grid-Game
+![GridGameVisualization](https://user-images.githubusercontent.com/56120787/150558179-b69a780f-0e03-408c-b564-28b53c19418e.gif)
 
 The grid game is a prototype similar to OpenAI gym environments, on which  reinforcement learning algorithms, namely Q-learning and Sarsa are applied. The prototype allows users to train the agent using the chosen algorithm, test the trained agent by playing the game, and compare algorithms under different sized environments and hyperparameters.
 
