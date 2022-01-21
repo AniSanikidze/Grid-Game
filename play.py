@@ -2,8 +2,7 @@ from visualization import display_gui
 import pickle
 
 def load(q_table):
-    path = "q_tables\{}.pkl".format(q_table)
-    with open(path, "rb") as G:
+    with open(q_table, "rb") as G:
         try:
             return pickle.load(G)
         except FileNotFoundError as e:
