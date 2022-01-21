@@ -19,8 +19,7 @@ class Training:
                                 len(self.environment.action_space)))
 
     def save_q_table(self, q_table_to_save):
-        path = "q_tables\{}.pkl".format(q_table_to_save)
-        with open(path, "wb") as G:
+        with open(q_table_to_save, "wb") as G:
             pickle.dump(self.q_table, G)
 
     def max_action(self, state, q_table):

@@ -53,11 +53,11 @@ Training with optional arguments
 
 ```bash
 
-python main.py train 300000 --algorithm S --q_table Example_Q_Table_Sarsa --env_size 7  --epsilon 1 --gamma 0.9 --alpha 0.5 --decaying_eps True --max_steps 100
+$ python main.py train 300000 --algorithm S --q_table q_tables/Example_Q_Table_Sarsa.pkl --env_size 7  --epsilon 1 --gamma 0.9 --alpha 0.5 --decaying_eps True --max_steps 100
 
 ```
 
-If the name for Q table is provided, then it will be saved in the q_tables folder, otherwise the Q table will not be saved.
+If the path for Q table is provided, then it will be saved in the q_tables folder, otherwise the Q table will not be saved.
 
 ### Play
 
@@ -67,14 +67,14 @@ Playing the game
 
 ```bash
 
-python main.py play 10 --q_table Q_table_Q_learning
+python main.py play 10 --q_table q_tables/Q_table_Q_learning
 
 ```
 Playing the game with optional arguments
 
 ```bash
 
-python main.py play 10 --q_table Q_table_Q_learning --max_steps 100 --env_size 7
+python main.py play 10 --q_table q_tables/Q_table_Q_learning --max_steps 100 --env_size 7
 
 ```
 
